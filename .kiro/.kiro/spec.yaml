@@ -1,0 +1,34 @@
+name: Smart Study Scheduler
+description: >
+  An AI agent that generates a personalized learning schedule based on a user’s goal, timeframe, and preferred learning style (visual, reading, interactive).
+  The agent uses hooks to break the topic into subtopics, allocate content across a calendar, and fetch matching learning resources from APIs like YouTube or blogs.
+
+goals:
+  - Take a user input like: "I want to learn JavaScript in 3 weeks, 1 hour per day. I'm a visual learner."
+  - Analyze the topic and break it into logical daily learning steps.
+  - Adjust pacing based on total duration and hours per day.
+  - Prioritize resources that match the user’s learning style.
+  - Use the YouTube API (or simulated data for demo) to find videos for each topic segment.
+  - Format output into a structured schedule (e.g. Day 1: Topic + Link).
+  - Optionally export to calendar format or print to console.
+
+inputs:
+  - topic (string): The subject to learn (e.g. "JavaScript")
+  - duration_weeks (number): How many weeks the user wants to study
+  - hours_per_day (number): Daily commitment
+  - learning_style (string): Preferred format (e.g. "visual", "reading", "interactive")
+
+outputs:
+  - A structured study schedule (JSON or Markdown)
+  - Learning resource links mapped to subtopics
+  - (Optional) Calendar-ready format (e.g. .ics, or daily log)
+
+hooks:
+  - fetchResources: Looks up YouTube or blog content matching the topic and user style
+  - calendarHook (optional): Formats output into a calendar-friendly format
+  - suggestFallbacks: If no content is found, offer backup topics or generic resources
+
+requirements:
+  - Output should be human-readable and structured
+  - Should handle edge cases (e.g., short timelines or vague topics)
+  - Designed for developers or students who want structured self-paced learning
