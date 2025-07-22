@@ -1,0 +1,38 @@
+agent "studyScheduler" {
+  description: "Helps users create personalized study plans and finds learning resources."
+
+  inputs:
+    - subject: "Topic or subject to study"
+    - duration: "Number of days or hours available"
+    - level: "Beginner, Intermediate, or Advanced"
+
+  tasks:
+    - generatePlan:
+        description: "Create a personalized study plan"
+        prompt: |
+          Create a study plan for {{subject}}.
+          The user has {{duration}} to study.
+          Their skill level is {{level}}.
+          Break the plan into daily goals.
+          Be friendly and motivational.
+    
+    - getResources:
+        description: "Find educational resources for the subject"
+        use: fetchResources.js
+        input:
+          subject: "{{subject}}"
+        output: resources
+
+    - combine:
+        description: "Combine plan with learning resources"
+        prompt: |
+          Here’s the study plan for {{subject}}:
+          {{generatePlan}}
+
+          Also include these helpful learning resources:
+          {{resources}}
+
+          Present the whole plan in a clean, numbered format with clickable links.
+
+  output: "{{combine}}"
+}
