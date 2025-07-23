@@ -1,53 +1,76 @@
 # 📚 Smart Study Scheduler
 
-**Category**: Educational Apps  
-**Team**: Solo — Angelo K.
-
----
-
-## 🚀 Overview
-
-Smart Study Scheduler is an AI-powered learning assistant that builds **personalized study plans** and finds **curated learning resources** based on the user’s:
-- Subject of interest
-- Available time
-- Skill level (Beginner, Intermediate, Advanced)
-
-Whether you're brushing up on Python, diving into history, or preparing for exams, this Kiro-powered agent builds a step-by-step plan to help you learn effectively and efficiently.
+**Category:** Educational Apps  
+**Hackathon:** Kiro Build July 2025  
+**Solo project by:** @akakumba
 
 ---
 
 ## 🧠 What It Does
 
-1. 📝 **Takes user input**:
-   - Subject (e.g., "Intro to Python")
-   - Duration (e.g., "7 days")
-   - Skill level (e.g., "Beginner")
+Smart Study Scheduler is an AI-powered learning assistant that generates personalized study plans based on:  
+- The subject you want to learn  
+- Your skill level (Beginner / Intermediate / Advanced)  
+- Your available time (in days or hours)  
 
-2. ⚙️ **Kiro agent generates**:
-   - Daily learning plan tailored to the time and level
-   - Resource recommendations (videos, tutorials, online courses)
-
-3. 📄 **Outputs a structured plan**:
-   - Easy-to-follow schedule
-   - Clickable learning links
-   - Friendly, motivating tone
+It also finds tailored learning resources like videos, docs, and courses to go with your plan — all in one clean, friendly format.
 
 ---
 
-## 💡 How Kiro Was Used
+## 💡 Why I Built It
 
-### `studyScheduler.kiro`
-- Defined a Kiro **agent** that takes three inputs and handles three key tasks:
-  1. `generatePlan`: Uses prompt engineering to create a day-by-day study schedule
-  2. `getResources`: Calls a custom `fetchResources.js` hook to get online resources
-  3. `combine`: Formats the study plan and links into a final user-friendly output
+Learning something new is overwhelming without a clear structure.
 
-### `fetchResources.js`
-- A Node.js hook that simulates fetching resources from learning platforms like Coursera, Khan Academy, and edX.
+This agent solves that by:  
+- Breaking learning into small, daily goals  
+- Matching your pace and level  
+- Suggesting trusted learning materials (e.g. MDN, FreeCodeCamp, W3Schools)
 
-### `.kiro/spec.yaml`
-- Provides example input and structure for the agent’s execution.
+---
+
+## 🚀 How It Works (Under the Hood)
+
+Built using Kiro Agent Framework, the project uses a 3-task agent pipeline:  
+1. **generatePlan**  
+   → Uses input like subject, level, and time to generate a motivational study plan  
+2. **getResources**  
+   → Calls a local function (`fetchResources.js`) to find quality links  
+3. **combine**  
+   → Merges the plan and resources into a user-friendly guide  
+
+**Example Output (truncated):**
+
+1. Day 1: Introduction to JavaScript  
+   - Set up your IDE and environment  
+   - Read: https://developer.mozilla.org/.../Guide  
+
+2. Day 2: DOM Manipulation  
+   - Watch: https://youtu.be/0ik6X4DJKCc  
 
 ---
 
 ## 📂 Project Structure
+smart-study-scheduler/
+├── .kiro/
+│   ├── hooks/
+│   │   ├── agent/
+│   │   │   └── studyScheduler.kiro
+│   │   └── fetchResources.js
+│   └── testFetch.js
+├── README.md
+└── LICENSE
+---
+
+## 🛠️ Technologies
+
+- JavaScript (Node.js)  
+- Kiro Agent SDK  
+- GitHub Codespaces for development
+
+---
+
+## 🧪 Test Locally
+
+To test the `fetchResources.js` function:  
+```bash
+node .kiro/testFetch.js```
