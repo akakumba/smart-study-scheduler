@@ -50,6 +50,7 @@ Built using Kiro Agent Framework, the project uses a 3-task agent pipeline:
 ---
 
 ## 📂 Project Structure
+```
 smart-study-scheduler/
 ├── .kiro/
 │   ├── hooks/
