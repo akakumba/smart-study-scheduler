@@ -60,6 +60,7 @@ smart-study-scheduler/
 │   └── testFetch.js
 ├── README.md
 └── LICENSE
+```
 ---
 
 ## 🛠️ Technologies
