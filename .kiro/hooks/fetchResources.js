@@ -1,21 +1,47 @@
 // .kiro/hooks/fetchResources.js
 
 module.exports = async function fetchResources({ subject }) {
+  console.log('Fetching resources for subject:', subject);
+
   const sampleResults = {
     JavaScript: [
-      { title: "JavaScript Crash Course", url: "https://youtu.be/hdI2bqOjy3c" },
-      { title: "DOM Manipulation Tutorial", url: "https://youtu.be/0ik6X4DJKCc" },
-      { title: "MDN JavaScript Guide", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" }
+      {
+        title: 'JavaScript for Beginners',
+        url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction',
+        description: 'An introductory guide from MDN.'
+      },
+      {
+        title: 'JavaScript Course - freeCodeCamp',
+        url: 'https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/',
+        description: 'Interactive JS curriculum.'
+      },
+      {
+        title: 'JavaScript.info',
+        url: 'https://javascript.info/',
+        description: 'Deep dive into modern JS concepts.'
+      }
     ],
     Python: [
-      { title: "Intro to Python – FreeCodeCamp", url: "https://youtu.be/rfscVS0vtbw" },
-      { title: "Python Functions – W3Schools", url: "https://www.w3schools.com/python/python_functions.asp" }
+      {
+        title: "Intro to Python – FreeCodeCamp",
+        url: "https://youtu.be/rfscVS0vtbw",
+        description: "Great intro video"
+      },
+      {
+        title: "Python Functions – W3Schools",
+        url: "https://www.w3schools.com/python/python_functions.asp",
+        description: "Beginner-friendly explanation"
+      }
     ]
   };
 
   return {
     resources: sampleResults[subject] || [
-      { title: "Khan Academy – General Resources", url: "https://khanacademy.org" }
+      {
+        title: "Khan Academy – General Resources",
+        url: "https://khanacademy.org",
+        description: "Fallback educational content"
+      }
     ]
   };
 };

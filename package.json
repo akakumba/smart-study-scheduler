@@ -1,0 +1,14 @@
+{
+  "name": "smart-study-scheduler",
+  "version": "1.0.0",
+  "description": "**Category:** Educational Apps   **Hackathon:** Kiro Build July 2025   **Solo project by:** @akakumba",
+  "main": "index.js",
+ "scripts": {
+    "test:agent": "echo \"Error: no test specified\" && exit 1",
+  "test:agent": "node .kiro/runSchedulerTest.js"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+

@@ -50,6 +50,8 @@ Built using Kiro Agent Framework, the project uses a 3-task agent pipeline:
 ---
 
 ## 📂 Project Structure
+
+```
 smart-study-scheduler/
 ├── .kiro/
 │   ├── hooks/
@@ -59,6 +61,8 @@ smart-study-scheduler/
 │   └── testFetch.js
 ├── README.md
 └── LICENSE
+```
+
 ---
 
 ## 🛠️ Technologies
@@ -73,4 +77,5 @@ smart-study-scheduler/
 
 To test the `fetchResources.js` function:  
 ```bash
-node .kiro/testFetch.js```
+node .kiro/testFetch.js
+```
