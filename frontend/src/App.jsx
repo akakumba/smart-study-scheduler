@@ -18,25 +18,52 @@ function App() {
 
   // --- AUTH ---
   const handleRegister = async () => {
+    if (!email || !password) {
+      alert('❌ Please enter both email and password');
+      return;
+    }
+
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          username: email.split('@')[0], // Use email prefix as username
+          email,
+          password
+        }),
       });
       const data = await res.json();
+
       if (res.ok) {
-        alert('✅ Registered successfully, you can now log in');
+        alert('✅ Account created successfully! You can now log in.');
+        setPassword(''); // Clear password for security
       } else {
-        alert(data.message || '❌ Registration failed');
+        // Better error messages
+        if (res.status === 409) {
+          alert('❌ An account with this email already exists');
+        } else if (res.status === 400) {
+          alert('❌ Please fill in all required fields');
+        } else {
+          alert(data.error || '❌ Registration failed');
+        }
       }
     } catch (err) {
       console.error(err);
-      alert('❌ Registration error');
+      if (err.message.includes('fetch')) {
+        alert('❌ Cannot connect to server. Make sure backend is running on port 5175.');
+      } else {
+        alert('❌ Registration error. Please try again.');
+      }
     }
   };
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      alert('❌ Please enter both email and password');
+      return;
+    }
+
     try {
       const res = await fetch('/api/login', {
         method: 'POST',
@@ -44,30 +71,76 @@ function App() {
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
+
       if (res.ok) {
         setUser(data.user);
-        alert(`✅ Logged in as ${data.user.email}`);
+        alert(`✅ Welcome back, ${data.user.username || data.user.email}!`);
         fetchSavedPlans();
+        setPassword(''); // Clear password for security
       } else {
-        alert(data.message || '❌ Invalid credentials');
+        // Better error messages
+        if (res.status === 401) {
+          alert('❌ Invalid email or password. Please check your credentials.');
+        } else if (res.status === 400) {
+          alert('❌ Please enter both email and password');
+        } else {
+          alert(data.error || '❌ Login failed');
+        }
       }
     } catch (err) {
       console.error(err);
-      alert('❌ Login error');
+      if (err.message.includes('fetch')) {
+        alert('❌ Cannot connect to server. Make sure backend is running on port 5175.');
+      } else {
+        alert('❌ Login error. Please try again.');
+      }
     }
   };
 
   // --- SAVED PLANS ---
   const fetchSavedPlans = async () => {
+    if (!user) return;
+
     setLoadingSaved(true);
     try {
-      const res = await fetch('/api/plans');
+      const res = await fetch(`/api/plans/${user.id}`);
       const data = await res.json();
       setSavedPlans(Array.isArray(data) ? data : []);
     } catch (e) {
       console.error("Failed to fetch saved plans", e);
     } finally {
       setLoadingSaved(false);
+    }
+  };
+
+  const loadSavedPlan = (savedPlan) => {
+    const planData = savedPlan.planData;
+    setSubject(planData.subject || '');
+    setLevel(planData.level || 'Beginner');
+    setDays(planData.totalDays?.toString() || '');
+    setPlan(planData.plan || []);
+    setResources(planData.resources || []);
+    alert(`✅ Loaded plan: ${savedPlan.title}`);
+  };
+
+  const deleteSavedPlan = async (planId) => {
+    if (!confirm("Are you sure you want to delete this plan?")) return;
+
+    try {
+      const response = await fetch(`/api/plans/${planId}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert("✅ Plan deleted successfully!");
+        fetchSavedPlans(); // Refresh the list
+      } else {
+        const data = await response.json();
+        alert(data.error || "❌ Failed to delete plan");
+      }
+    } catch (err) {
+      console.error("Error deleting plan:", err);
+      alert("❌ Error deleting plan. Please try again.");
     }
   };
 
@@ -104,31 +177,56 @@ function App() {
     }
   };
 
-  // --- SAVE PLAN (stub only) ---
+  // --- SAVE PLAN ---
   const savePlan = async () => {
     if (!user) {
       alert("❌ Please log in to save plans");
       return;
     }
     if (!plan.length) {
-      alert("Generate a plan first");
+      alert("❌ Generate a plan first");
       return;
     }
-    alert("💾 Save Plan clicked (not yet connected to backend)");
+
+    try {
+      const planData = {
+        subject,
+        level,
+        totalDays: days || 7,
+        plan,
+        resources,
+        generatedAt: new Date().toISOString()
+      };
+
+      const response = await fetch('/api/savePlan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          planData,
+          title: `${subject} - ${level} (${days || 7} days)`
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("✅ Plan saved successfully!");
+        fetchSavedPlans(); // Refresh the saved plans list
+      } else {
+        alert(data.error || "❌ Failed to save plan");
+      }
+    } catch (err) {
+      console.error("Error saving plan:", err);
+      alert("❌ Error saving plan. Please try again.");
+    }
   };
 
   return (
     <div className="App">
 
       {/* --- LOGIN TOP BAR --- */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        gap: '8px',
-        padding: '10px',
-        backgroundColor: '#f4f4f4'
-      }}>
+      <div className="login-bar">
         <input
           type="email"
           placeholder="Email"
@@ -189,41 +287,125 @@ function App() {
           <ul>
             {plan.map((day) => (
               <li key={day.day}>
-                <strong>{day.day}:</strong> {day.task} — {day.duration} mins  
+                <strong>{day.day}:</strong> {day.task} — {day.duration} mins
                 <br />
                 🎯 <em>{day.goal}</em>
               </li>
             ))}
           </ul>
 
-          <h2>📚 Resources</h2>
-          <ul>
-            {resources.map((r, i) => (
-              <li key={i}>
-                <a href={r.url} target="_blank" rel="noreferrer">
-                  {r.title}
-                </a> — {r.description} ({r.type})
-              </li>
-            ))}
-          </ul>
+          <h2>📚 Learning Resources</h2>
+
+          {/* Video Resources */}
+          {resources.filter(r => r.type === 'video').length > 0 && (
+            <div className="resource-category">
+              <h3>🎥 Video Tutorials</h3>
+              <ul>
+                {resources.filter(r => r.type === 'video').map((r, i) => (
+                  <li key={`video-${i}`} className="resource-item">
+                    <a href={r.url} target="_blank" rel="noreferrer" className="resource-link">
+                      <strong>{r.title}</strong>
+                    </a>
+                    <p className="resource-description">{r.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Article Resources */}
+          {resources.filter(r => r.type === 'article').length > 0 && (
+            <div className="resource-category">
+              <h3>📖 Articles & Tutorials</h3>
+              <ul>
+                {resources.filter(r => r.type === 'article').map((r, i) => (
+                  <li key={`article-${i}`} className="resource-item">
+                    <a href={r.url} target="_blank" rel="noreferrer" className="resource-link">
+                      <strong>{r.title}</strong>
+                    </a>
+                    <p className="resource-description">{r.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Interactive Resources */}
+          {resources.filter(r => r.type === 'interactive').length > 0 && (
+            <div className="resource-category">
+              <h3>🎮 Interactive Platforms</h3>
+              <ul>
+                {resources.filter(r => r.type === 'interactive').map((r, i) => (
+                  <li key={`interactive-${i}`} className="resource-item">
+                    <a href={r.url} target="_blank" rel="noreferrer" className="resource-link">
+                      <strong>{r.title}</strong>
+                    </a>
+                    <p className="resource-description">{r.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Fallback for uncategorized resources */}
+          {resources.filter(r => !['video', 'article', 'interactive'].includes(r.type)).length > 0 && (
+            <div className="resource-category">
+              <h3>🔗 Other Resources</h3>
+              <ul>
+                {resources.filter(r => !['video', 'article', 'interactive'].includes(r.type)).map((r, i) => (
+                  <li key={`other-${i}`} className="resource-item">
+                    <a href={r.url} target="_blank" rel="noreferrer" className="resource-link">
+                      <strong>{r.title}</strong>
+                    </a>
+                    <p className="resource-description">{r.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
 
       {/* --- SAVED PLANS --- */}
-      <div className="plan">
-        <h2>📂 Saved Plans</h2>
-        <button onClick={fetchSavedPlans} disabled={loadingSaved}>
-          {loadingSaved ? "Refreshing..." : "Refresh List"}
-        </button>
-        <ul>
-          {savedPlans.map((p) => (
-            <li key={p.id}>
-              <strong>#{p.id}</strong> — {p.subject} ({p.level}) — {p.days || 0} days
-            </li>
-          ))}
-          {!savedPlans.length && <li>No saved plans yet</li>}
-        </ul>
-      </div>
+      {user && (
+        <div className="plan">
+          <h2>📂 My Saved Plans</h2>
+          <button onClick={fetchSavedPlans} disabled={loadingSaved}>
+            {loadingSaved ? "Loading..." : "Refresh Plans"}
+          </button>
+
+          {savedPlans.length > 0 ? (
+            <div className="saved-plans-grid">
+              {savedPlans.map((savedPlan) => (
+                <div key={savedPlan.id} className="saved-plan-card">
+                  <h3>{savedPlan.title}</h3>
+                  <p><strong>Subject:</strong> {savedPlan.planData?.subject}</p>
+                  <p><strong>Level:</strong> {savedPlan.planData?.level}</p>
+                  <p><strong>Duration:</strong> {savedPlan.planData?.totalDays || 'N/A'} days</p>
+                  <p><strong>Saved:</strong> {new Date(savedPlan.savedAt).toLocaleDateString()}</p>
+
+                  <div className="plan-actions">
+                    <button
+                      onClick={() => loadSavedPlan(savedPlan)}
+                      className="load-plan-btn"
+                    >
+                      📋 Load Plan
+                    </button>
+                    <button
+                      onClick={() => deleteSavedPlan(savedPlan.id)}
+                      className="delete-plan-btn"
+                    >
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No saved plans yet. Generate and save your first plan!</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

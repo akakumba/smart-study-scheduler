@@ -1,0 +1,84 @@
+[
+  {
+    "id": "1757792631272",
+    "userId": "1757790054058",
+    "title": "math - Beginner (7 days)",
+    "planData": {
+      "subject": "math",
+      "level": "Beginner",
+      "totalDays": 7,
+      "plan": [
+        {
+          "day": "Day 1",
+          "task": "Introduction to math",
+          "duration": 60,
+          "goal": "Complete introduction to math"
+        },
+        {
+          "day": "Day 2",
+          "task": "Basic concepts and terminology",
+          "duration": 60,
+          "goal": "Complete basic concepts and terminology"
+        },
+        {
+          "day": "Day 3",
+          "task": "Hands-on practice and examples",
+          "duration": 60,
+          "goal": "Complete hands-on practice and examples"
+        },
+        {
+          "day": "Day 4",
+          "task": "Intermediate topics and applications",
+          "duration": 60,
+          "goal": "Complete intermediate topics and applications"
+        },
+        {
+          "day": "Day 5",
+          "task": "Advanced concepts and problem solving",
+          "duration": 60,
+          "goal": "Complete advanced concepts and problem solving"
+        },
+        {
+          "day": "Day 6",
+          "task": "Real-world projects and case studies",
+          "duration": 60,
+          "goal": "Complete real-world projects and case studies"
+        },
+        {
+          "day": "Day 7",
+          "task": "Review, assessment, and next steps",
+          "duration": 60,
+          "goal": "Complete review, assessment, and next steps"
+        }
+      ],
+      "resources": [
+        {
+          "title": "YouTube: math Beginner Tutorials",
+          "url": "https://www.youtube.com/results?search_query=math+Beginner+tutorial",
+          "description": "Search results for math Beginner tutorials",
+          "type": "video"
+        },
+        {
+          "title": "Khan Academy - General Learning",
+          "url": "https://khanacademy.org",
+          "description": "Free educational content",
+          "type": "video"
+        },
+        {
+          "title": "Coursera Free Courses",
+          "url": "https://www.coursera.org/courses?query=free",
+          "description": "University-level courses",
+          "type": "article"
+        },
+        {
+          "title": "edX Free Courses",
+          "url": "https://www.edx.org/",
+          "description": "Interactive learning platform",
+          "type": "interactive"
+        }
+      ],
+      "generatedAt": "2025-09-13T19:43:51.258Z"
+    },
+    "savedAt": "2025-09-13T19:43:51.272Z"
+  }
+]
