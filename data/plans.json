@@ -1,0 +1,118 @@
+[
+  {
+    "id": "1757274896904",
+    "userId": "1757274886737",
+    "title": "math - Beginner",
+    "planData": {
+      "subject": "math",
+      "level": "Beginner",
+      "timeframe": "7 days",
+      "plan": [
+        "Day 1: Introduction to math",
+        "Day 2: Basic concepts and terminology",
+        "Day 3: Hands-on practice and examples",
+        "Day 4: Intermediate topics and applications",
+        "Day 5: Advanced concepts and problem solving",
+        "Day 6: Real-world projects and case studies",
+        "Day 7: Review, assessment, and next steps"
+      ],
+      "resources": [
+        {
+          "title": "Khan Academy – General Resources",
+          "url": "https://khanacademy.org"
+        }
+      ],
+      "generatedAt": "2025-09-07T19:51:06.950Z",
+      "totalDays": 7
+    },
+    "savedAt": "2025-09-07T19:54:56.904Z"
+  },
+  {
+    "id": "1757276652627",
+    "userId": "1757274886737",
+    "title": "physics - Beginner",
+    "planData": {
+      "subject": "physics",
+      "level": "Beginner",
+      "timeframe": "7 days",
+      "plan": [
+        "Day 1: Introduction to physics",
+        "Day 2: Basic concepts and terminology",
+        "Day 3: Hands-on practice and examples",
+        "Day 4: Intermediate topics and applications",
+        "Day 5: Advanced concepts and problem solving",
+        "Day 6: Real-world projects and case studies",
+        "Day 7: Review, assessment, and next steps"
+      ],
+      "resources": [
+        {
+          "title": "YouTube: physics Beginner Tutorials",
+          "url": "https://www.youtube.com/results?search_query=physics+Beginner+tutorial",
+          "type": "video"
+        },
+        {
+          "title": "Khan Academy - General Learning",
+          "url": "https://khanacademy.org",
+          "type": "video"
+        },
+        {
+          "title": "Coursera Free Courses",
+          "url": "https://www.coursera.org/courses?query=free",
+          "type": "article"
+        },
+        {
+          "title": "edX Free Courses",
+          "url": "https://www.edx.org/",
+          "type": "interactive"
+        }
+      ],
+      "generatedAt": "2025-09-07T20:24:06.642Z",
+      "totalDays": 7
+    },
+    "savedAt": "2025-09-07T20:24:12.627Z"
+  },
+  {
+    "id": "1757385434348",
+    "userId": "1757274886737",
+    "title": "math - Beginner",
+    "planData": {
+      "subject": "math",
+      "level": "Beginner",
+      "timeframe": "7 days",
+      "plan": [
+        "Day 1: Introduction to math",
+        "Day 2: Basic concepts and terminology",
+        "Day 3: Hands-on practice and examples",
+        "Day 4: Intermediate topics and applications",
+        "Day 5: Advanced concepts and problem solving",
+        "Day 6: Real-world projects and case studies",
+        "Day 7: Review, assessment, and next steps"
+      ],
+      "resources": [
+        {
+          "title": "YouTube: math Beginner Tutorials",
+          "url": "https://www.youtube.com/results?search_query=math+Beginner+tutorial",
+          "type": "video"
+        },
+        {
+          "title": "Khan Academy - General Learning",
+          "url": "https://khanacademy.org",
+          "type": "video"
+        },
+        {
+          "title": "Coursera Free Courses",
+          "url": "https://www.coursera.org/courses?query=free",
+          "type": "article"
+        },
+        {
+          "title": "edX Free Courses",
+          "url": "https://www.edx.org/",
+          "type": "interactive"
+        }
+      ],
+      "generatedAt": "2025-09-09T02:36:57.498Z",
+      "totalDays": 7
+    },
+    "savedAt": "2025-09-09T02:37:14.348Z"
+  }
+]
